@@ -1,0 +1,10 @@
+{
+  "name": "fortsmart-agro-admin-electron",
+  "version": "1.0.0",
+  "description": "FortSmart Agro Admin - Desktop App",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  }
+}
+

@@ -1,0 +1,32 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.fortsmart.agro.admin
+productName: FortSmart Agro Admin
+files:
+  - filter:
+      - package.json
+      - electron/**/*
+      - .next/standalone/**/*
+      - .next/static/**/*
+      - public/**/*
+      - .env.local
+      - '!node_modules/**/*'
+asarUnpack:
+  - electron/**/*
+  - .next/standalone/**/*
+win:
+  target: nsis
+  icon: assets/icon.ico
+mac:
+  target: dmg
+  icon: assets/icon.icns
+  category: public.app-category.business
+linux:
+  target: AppImage
+  icon: assets/icon.png
+  category: Office
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+electronVersion: 28.3.3
