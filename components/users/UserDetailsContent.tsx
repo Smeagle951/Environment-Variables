@@ -244,6 +244,59 @@ export default function UserDetailsContent({ userId }: { userId: string }) {
               </div>
             </div>
 
+            {/* Acesso e Recuperação Especiais */}
+            {(user.free_access || user.force_data_recovery || (user.authorized_modules && Object.keys(user.authorized_modules).length > 0)) && (
+              <div className="bg-white rounded-lg shadow p-6">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <Key className="w-5 h-5 text-gray-500" />
+                  Controles Especiais
+                </h2>
+                <div className="space-y-4">
+
+                  {user.free_access && (
+                    <div className="flex items-center justify-between p-3 bg-green-50 rounded border border-green-100">
+                      <div className="flex items-center gap-2">
+                        <Shield className="w-5 h-5 text-green-600" />
+                        <span className="text-sm font-medium text-green-900">Acesso Livre Ativo</span>
+                      </div>
+                      <span className="text-xs text-green-700 bg-green-200 px-2 py-1 rounded-full">Bypass</span>
+                    </div>
+                  )}
+
+                  {user.force_data_recovery && (
+                    <div className="flex items-center justify-between p-3 bg-red-50 rounded border border-red-100">
+                      <div className="flex items-center gap-2">
+                        <Database className="w-5 h-5 text-red-600" />
+                        <span className="text-sm font-medium text-red-900">Recuperação de Dados Pendente</span>
+                      </div>
+                      <span className="text-xs text-red-700 bg-red-200 px-2 py-1 rounded-full">Agendado</span>
+                    </div>
+                  )}
+
+                  {user.authorized_modules && Object.keys(user.authorized_modules).some(k => user.authorized_modules![k]) && (
+                    <div>
+                      <h3 className="text-sm text-gray-600 mb-2 mt-4">Módulos Liberados:</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {Object.entries(user.authorized_modules)
+                          .filter(([_, isActive]) => isActive)
+                          .map(([key]) => (
+                            <span key={key} className="px-2.5 py-1 bg-gray-100 border border-gray-200 text-gray-700 text-xs font-medium rounded">
+                              {key === 'dashboard' ? 'Dashboard' :
+                                key === 'planting' ? 'Plantio' :
+                                  key === 'harvest' ? 'Colheita' :
+                                    key === 'inventory' ? 'Estoque' :
+                                      key === 'financial' ? 'Financeiro' :
+                                        key === 'reports' ? 'Relatórios' : key}
+                            </span>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+
+                </div>
+              </div>
+            )}
+
             {/* Assinatura */}
             <div className="bg-white rounded-lg shadow p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Assinatura</h2>
@@ -305,14 +358,13 @@ export default function UserDetailsContent({ userId }: { userId: string }) {
                     <div key={code.id} className="border border-gray-200 rounded p-3">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-mono text-gray-600">{code.code}</span>
-                        <span className={`px-2 py-0.5 rounded text-xs ${
-                          code.status === 'used' ? 'bg-green-100 text-green-800' :
-                          code.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-red-100 text-red-800'
-                        }`}>
+                        <span className={`px-2 py-0.5 rounded text-xs ${code.status === 'used' ? 'bg-green-100 text-green-800' :
+                            code.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                              'bg-red-100 text-red-800'
+                          }`}>
                           {code.status === 'used' ? 'Usado' :
-                           code.status === 'pending' ? 'Pendente' :
-                           'Expirado'}
+                            code.status === 'pending' ? 'Pendente' :
+                              'Expirado'}
                         </span>
                       </div>
                       <p className="text-xs text-gray-500">

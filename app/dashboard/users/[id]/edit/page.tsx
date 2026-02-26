@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import UserEditContent from '@/components/users/UserEditContent'
+import EditUserContent from '@/components/users/EditUserContent'
 
-export default async function UserEditPage({
+export default async function EditUserPage({
   params,
 }: {
   params: { id: string }
@@ -38,6 +38,5 @@ export default async function UserEditPage({
     redirect('/')
   }
 
-  return <UserEditContent userId={params.id} />
+  return <EditUserContent userId={params.id} />
 }
-

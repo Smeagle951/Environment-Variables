@@ -30,6 +30,9 @@ export interface UserSummary {
   group_name: string | null
   group_subscription_status: string | null
   group_role: string | null
+  authorized_modules?: { [key: string]: boolean }
+  free_access?: boolean
+  force_data_recovery?: boolean
 }
 
 export interface GroupSummary {
